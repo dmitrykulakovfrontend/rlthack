@@ -1,0 +1,30 @@
+version: "2"
+
+services:
+  backend:
+    image: "dmitrykulakovfrontend/cringeneers-backend:latest"
+    build:
+      context: ./backend
+    container_name: backend
+    ports:
+      - 8080:8080
+    depends_on:
+      - database
+    env_file:
+      - .env
+
+  database:
+    image: "postgres:13.1-alpine"
+    container_name: database
+    env_file:
+      - .env
+
+  frontend:
+    image: "dmitrykulakovfrontend/cringeneers-frontend:latest"
+    ports:
+      - 3000:3000
+    build:
+      context: ./frontend
+    container_name: frontend
+    depends_on:
+      - backend
