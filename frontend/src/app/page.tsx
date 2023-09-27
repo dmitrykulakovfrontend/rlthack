@@ -1,12 +1,13 @@
 "use client";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { BACKEND_URL } from "../../constants";
 
 export default function Home() {
   const [data, setData] = useState();
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch("http://localhost:8080/api/test");
+      const res = await fetch(`${BACKEND_URL}/api/test`);
       const data = await res.json();
       setData(data);
     }
@@ -128,4 +129,3 @@ export default function Home() {
     </main>
   );
 }
-
