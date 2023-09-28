@@ -1,0 +1,13 @@
+<svg width="24" height="23" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 337162">
+<path id="Rectangle 2514" d="M5.94678 14.2801C5.94678 10.8922 8.6932 8.14581 12.0811 8.14581C15.469 8.14581 18.2154 10.8922 18.2154 14.2801V18.1125C18.2154 19.4886 17.0998 20.6042 15.7237 20.6042H8.43845C7.06234 20.6042 5.94678 19.4886 5.94678 18.1125V14.2801Z" fill="#025CFF"/>
+<ellipse id="Ellipse 548" cx="11.8454" cy="3.59375" rx="3.53903" ry="3.59375" fill="#025CFF"/>
+<path id="Rectangle 2515" d="M0.756348 20.0895C0.756348 17.0234 3.24191 14.5378 6.308 14.5378H17.8544C20.9205 14.5378 23.4061 17.0234 23.4061 20.0895C23.4061 21.6225 22.1633 22.8653 20.6303 22.8653H3.53218C1.99913 22.8653 0.756348 21.6225 0.756348 20.0895Z" fill="url(#paint0_radial_23_6559)"/>
+</g>
+<defs>
+<radialGradient id="paint0_radial_23_6559" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(12.0812 14.5378) rotate(90) scale(11.2714 11.0998)">
+<stop stop-color="#6FA2FF"/>
+<stop offset="1" stop-color="#CBE6FF"/>
+</radialGradient>
+</defs>
+</svg>
