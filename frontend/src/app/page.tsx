@@ -95,31 +95,27 @@ export default function Home() {
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
         />
         <div className="w-fit mx-auto rounded-full">
-          <Image
-            alt=""
-            src={ellipseBigSVG}
-            className="wx-auto z-20 backdrop-blur-sm  rounded-full"
-          />
+          <Image alt="" src={ellipseBigSVG} className="wx-auto rounded-full" />
           <h2 className="text-4xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center font-bold">
             О площадке
           </h2>
         </div>
-        <div className="bg-indigo-700 rounded-[40px] border-4 absolute left-12 -top-8 -z-10 border-white border-opacity-30 backdrop-blur-2xl w-fit py-3 text-2xl px-12">
+        <div className="bg-indigo-700 rounded-[40px] border-4 absolute left-12 -top-8  border-white border-opacity-30 backdrop-blur-2xl w-fit py-3 text-2xl px-12">
           Прокачиваем развивающийся сегмент рынка
         </div>
-        <div className="bg-slate-500 rounded-[40px] border-4 absolute right-28 top-12 -z-10  border-white border-opacity-30 backdrop-blur-2xl w-fit py-3 text-2xl px-12">
+        <div className="bg-slate-500 rounded-[40px] border-4 absolute right-28 top-12   border-white border-opacity-30 backdrop-blur-2xl w-fit py-3 text-2xl px-12">
           Оператор электронных торгов
         </div>
-        <div className="bg-emerald-300 rounded-[40px] border-4 absolute -right-8 top-1/2 -z-10  -translate-y-2/3 border-white border-opacity-30 backdrop-blur-2xl w-fit py-3 text-2xl px-12">
+        <div className="bg-emerald-300 rounded-[40px] border-4 absolute -right-8 top-1/2   -translate-y-2/3 border-white border-opacity-30 backdrop-blur-2xl w-fit py-3 text-2xl px-12">
           Агрегатор номенклатур продукций{" "}
         </div>
-        <div className="bg-blue-800 rounded-[40px] border-4 absolute -right-16 bottom-12  -z-10 border-white border-opacity-30 backdrop-blur-2xl w-fit py-3 text-2xl px-12">
+        <div className="bg-blue-800 rounded-[40px] border-4 absolute -right-16 bottom-12   border-white border-opacity-30 backdrop-blur-2xl w-fit py-3 text-2xl px-12">
           Высокий уровень качества услуг в закупках
         </div>
-        <div className="bg-lime-600 rounded-[40px] border-4 absolute left-24 bottom-0 -z-10  border-white border-opacity-30 backdrop-blur-2xl w-fit py-3 text-2xl px-12">
+        <div className="bg-lime-600 rounded-[40px] border-4 absolute left-24 bottom-0   border-white border-opacity-30 backdrop-blur-2xl w-fit py-3 text-2xl px-12">
           Доверие крупнейших игроков рынка
         </div>
-        <div className="bg-blue-600 rounded-[40px] border-4 absolute left-0 bottom-1/2 -z-10   border-white border-opacity-30 backdrop-blur-2xl w-fit py-3 text-2xl px-12">
+        <div className="bg-blue-600 rounded-[40px] border-4 absolute left-0 bottom-1/2   border-white border-opacity-30 backdrop-blur-2xl w-fit py-3 text-2xl px-12">
           Разнообразие категорий и товаров
         </div>
       </section>
