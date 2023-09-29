@@ -143,37 +143,29 @@ export default function Home() {
             href=""
             className="bg-black flex gap-8 bg-opacity-20 py-4 px-8 items-center rounded-3xl border-4 border-blue-700"
           >
-            <span>
-              <Image src={questionSVG} alt="" />
-              Ответы на частые вопросы
-            </span>
+            <Image src={questionSVG} alt="" />
+            <span>Ответы на частые вопросы</span>
           </CustomLink>
           <a
             href="tel:+74951502020"
             className="bg-black items-center flex gap-8  bg-opacity-20 py-4 px-8 rounded-3xl border-4 border-blue-700"
           >
-            <span>
-              <Image src={phoneSVG} alt="" />
-              +7 495 150 20 20
-            </span>
+            <Image src={phoneSVG} alt="" />
+            <span>+7 495 150 20 20</span>
           </a>
           <CustomLink
             href=""
             className="bg-black items-center flex gap-8  bg-opacity-20 py-4 px-8 rounded-3xl border-4 border-blue-700"
           >
-            <span>
-              <Image src={talkSVG} alt="" />
-              Онлайн-чат
-            </span>
+            <Image src={talkSVG} alt="" />
+            <span>Онлайн-чат</span>
           </CustomLink>
           <CustomLink
             href=""
             className="bg-black items-center flex gap-8  bg-opacity-20 py-4 px-8 rounded-3xl border-4 border-blue-700"
           >
-            <span>
-              <Image src={documentSVG} alt="" />
-              Библиотека знаний
-            </span>
+            <Image src={documentSVG} alt="" />
+            <span>Библиотека знаний</span>
           </CustomLink>
         </div>
       </section>
