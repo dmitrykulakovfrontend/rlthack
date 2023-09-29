@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+import Image from "next/future/image";
 import { useState, useEffect } from "react";
 import { BACKEND_URL } from "../../constants";
 
@@ -16,7 +16,7 @@ import talkSVG from "@/../public/images/icons/talk.svg";
 import phoneSVG from "@/../public/images/icons/phone.svg";
 
 import Input from "@/components/Input";
-import Link from "next/link";
+import CustomLink from "@/components/CustomLink";
 
 const advantages = [
   {
@@ -45,7 +45,7 @@ const advantages = [
 
 export default function Home() {
   return (
-    <main className=" text-white px-16 my-32 flex flex-col gap-48">
+    <main className=" text-white px-16 py-32 flex flex-col gap-48">
       <Image
         alt=""
         src={dotsSVG}
@@ -131,7 +131,7 @@ export default function Home() {
           Разнообразие категорий и товаров
         </div>
       </section>
-      <section className="flex overflow-clip relative flex-col gap-14">
+      <section className="flex overflow-clip relative flex-col mb-16 gap-14">
         <Image
           alt=""
           src={dots2SVG}
@@ -139,34 +139,42 @@ export default function Home() {
         />
         <h2 className="text-4xl font-bold">Центр поддержки</h2>
         <div className="flex text-2xl justify-between">
-          <Link
-            href="#"
+          <CustomLink
+            href=""
             className="bg-black flex gap-8 bg-opacity-20 py-4 px-8 items-center rounded-3xl border-4 border-blue-700"
           >
-            <Image src={questionSVG} alt="" />
-            <span>Ответы на частые вопросы</span>
-          </Link>
+            <span>
+              <Image src={questionSVG} alt="" />
+              Ответы на частые вопросы
+            </span>
+          </CustomLink>
           <a
             href="tel:+74951502020"
             className="bg-black items-center flex gap-8  bg-opacity-20 py-4 px-8 rounded-3xl border-4 border-blue-700"
           >
-            <Image src={phoneSVG} alt="" />
-            <span>+7 495 150 20 20</span>
+            <span>
+              <Image src={phoneSVG} alt="" />
+              +7 495 150 20 20
+            </span>
           </a>
-          <Link
-            href="#"
+          <CustomLink
+            href=""
             className="bg-black items-center flex gap-8  bg-opacity-20 py-4 px-8 rounded-3xl border-4 border-blue-700"
           >
-            <Image src={talkSVG} alt="" />
-            <span>Онлайн-чат</span>
-          </Link>
-          <Link
-            href="#"
+            <span>
+              <Image src={talkSVG} alt="" />
+              Онлайн-чат
+            </span>
+          </CustomLink>
+          <CustomLink
+            href=""
             className="bg-black items-center flex gap-8  bg-opacity-20 py-4 px-8 rounded-3xl border-4 border-blue-700"
           >
-            <Image src={documentSVG} alt="" />
-            <span>Библиотека знаний</span>
-          </Link>
+            <span>
+              <Image src={documentSVG} alt="" />
+              Библиотека знаний
+            </span>
+          </CustomLink>
         </div>
       </section>
     </main>

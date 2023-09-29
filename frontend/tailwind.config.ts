@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-
+const defaultTheme = require("tailwindcss/defaultTheme");
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -14,8 +14,8 @@ const config: Config = {
         pixelatedFix: "0 0 1px 1px",
       },
       fontFamily: {
-        montserrat: ["var(--font-montserrat)"],
-        exo2: ["var(--font-exo2)"],
+        montserrat: ["Montserrat", ...defaultTheme.fontFamily.sans],
+        exo2: ["Exo 2", ...defaultTheme.fontFamily.sans],
       },
     },
   },

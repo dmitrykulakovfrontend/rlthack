@@ -1,6 +1,6 @@
 import React from "react";
 import searchSVG from "@/../public/images/icons/search.svg";
-import Image from "next/image";
+import Image from "next/future/image";
 
 type Props = {
   search?: boolean;
