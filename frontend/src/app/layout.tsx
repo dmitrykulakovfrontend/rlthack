@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Montserrat, Exo_2 } from "next/font/google";
+import Footer from "@/components/Footer";
 
 const montserrat = Montserrat({
   subsets: ["latin", "cyrillic"],
@@ -25,13 +26,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="ru"
-      className={`${montserrat.variable} ${exo_2.variable} h-full`}
-    >
-      <body className="font-montserrat h-full">
+    <html lang="ru" className={`${montserrat.variable} ${exo_2.variable}`}>
+      <body className="font-montserrat">
         <Header />
-        <div className="mt-20 h-full">{children}</div>
+        <div className="mt-20">{children}</div>
+        <Footer />
       </body>
     </html>
   );

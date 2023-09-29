@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { BACKEND_URL } from "../../constants";
+
 import dotsSVG from "@/../public/images/background-dots-1.svg";
 import dots2SVG from "@/../public/images/background-dots-2.svg";
 import iconsSVG from "@/../public/images/icons/icons-group.svg";
@@ -9,7 +10,13 @@ import twoHumanSVG from "@/../public/images/icons/two-human.svg";
 import twoHuman2SVG from "@/../public/images/icons/two-human-2.svg";
 import ellipseBigSVG from "@/../public/images/ellipse-big.svg";
 import ellipseSmallSVG from "@/../public/images/ellipse-small.svg";
+import questionSVG from "@/../public/images/icons/question.svg";
+import documentSVG from "@/../public/images/icons/document.svg";
+import talkSVG from "@/../public/images/icons/talk.svg";
+import phoneSVG from "@/../public/images/icons/phone.svg";
+
 import Input from "@/components/Input";
+import Link from "next/link";
 
 const advantages = [
   {
@@ -63,7 +70,12 @@ export default function Home() {
           className="absolute right-0 top-1/2 -translate-y-1/3 -z-10"
         />
       </section>
-      <section className="flex flex-col gap-32">
+      <section className="flex relative flex-col gap-32">
+        <Image
+          alt=""
+          src={dots2SVG}
+          className="-z-10 absolute top-0 left-0 w-full"
+        />
         {advantages.map((advantage) => (
           <div
             key={advantage.title}
@@ -117,6 +129,44 @@ export default function Home() {
         </div>
         <div className="bg-blue-600 rounded-[40px] border-4 absolute left-0 bottom-1/2   border-white border-opacity-30 backdrop-blur-2xl w-fit py-3 text-2xl px-12">
           Разнообразие категорий и товаров
+        </div>
+      </section>
+      <section className="flex overflow-clip relative flex-col gap-14">
+        <Image
+          alt=""
+          src={dots2SVG}
+          className="-z-10 absolute top-0 left-0 w-full"
+        />
+        <h2 className="text-4xl font-bold">Центр поддержки</h2>
+        <div className="flex text-2xl justify-between">
+          <Link
+            href="#"
+            className="bg-black flex gap-8 bg-opacity-20 py-4 px-8 items-center rounded-3xl border-4 border-blue-700"
+          >
+            <Image src={questionSVG} alt="" />
+            <span>Ответы на частые вопросы</span>
+          </Link>
+          <a
+            href="tel:+74951502020"
+            className="bg-black items-center flex gap-8  bg-opacity-20 py-4 px-8 rounded-3xl border-4 border-blue-700"
+          >
+            <Image src={phoneSVG} alt="" />
+            <span>+7 495 150 20 20</span>
+          </a>
+          <Link
+            href="#"
+            className="bg-black items-center flex gap-8  bg-opacity-20 py-4 px-8 rounded-3xl border-4 border-blue-700"
+          >
+            <Image src={talkSVG} alt="" />
+            <span>Онлайн-чат</span>
+          </Link>
+          <Link
+            href="#"
+            className="bg-black items-center flex gap-8  bg-opacity-20 py-4 px-8 rounded-3xl border-4 border-blue-700"
+          >
+            <Image src={documentSVG} alt="" />
+            <span>Библиотека знаний</span>
+          </Link>
         </div>
       </section>
     </main>

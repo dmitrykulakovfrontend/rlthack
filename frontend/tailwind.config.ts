@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
       boxShadow: {
         bottom: "0px -6px 16px 14px #FFF",
+        top: "0px 0px 16px 10px #FFF",
         pixelatedFix: "0 0 1px 1px",
       },
       fontFamily: {

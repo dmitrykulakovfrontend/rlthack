@@ -1,0 +1,15 @@
+<svg width="49" height="49" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 337400">
+<path id="Rectangle 2576" d="M0 12.25C0 8.86726 2.74226 6.125 6.125 6.125H28.5833C31.9661 6.125 34.7083 8.86726 34.7083 12.25V42.875C34.7083 46.2577 31.9661 49 28.5833 49H6.125C2.74226 49 0 46.2577 0 42.875V12.25Z" fill="#1F66FF"/>
+<path id="Vector 738" d="M5.62256 33.1763H13.6298" stroke="white" stroke-width="2.04167" stroke-linecap="round"/>
+<path id="Vector 739" d="M5.62256 25.5901H29.6928" stroke="white" stroke-width="2.04167" stroke-linecap="round"/>
+<path id="Vector 740" d="M5.62256 18.343H29.6928" stroke="white" stroke-width="2.04167" stroke-linecap="round"/>
+<path id="Union" fill-rule="evenodd" clip-rule="evenodd" d="M29.8437 25.4203C32.555 25.4203 35.068 24.5714 37.1315 23.1248C37.1684 23.166 37.2066 23.2064 37.2462 23.246L43.9179 29.9177C45.0805 31.0803 46.9655 31.0803 48.1282 29.9177C49.2908 28.755 49.2908 26.87 48.1282 25.7073L41.4565 19.0357C41.3311 18.9102 41.1972 18.7983 41.0568 18.7C42.0121 16.9153 42.5539 14.876 42.5539 12.7102C42.5539 5.69053 36.8633 0 29.8437 0C22.8241 0 17.1335 5.69053 17.1335 12.7102C17.1335 19.7298 22.8241 25.4203 29.8437 25.4203Z" fill="url(#paint0_radial_103_6691)"/>
+</g>
+<defs>
+<radialGradient id="paint0_radial_103_6691" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(22.6308 19.4677) rotate(-42.6738) scale(16.6127 24.2059)">
+<stop stop-color="#6FA2FF"/>
+<stop offset="1" stop-color="#CBE6FF"/>
+</radialGradient>
+</defs>
+</svg>
