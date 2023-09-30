@@ -5,19 +5,34 @@ import bellSVG from "@/../public/images/icons/icon-outline-bell.svg";
 import folderSVG from "@/../public/images/icons/icon-outline-folder.svg";
 import chartSVG from "@/../public/images/icons/icon-outline-chart-bar.svg";
 import userSVG from "@/../public/images/icons/icon-outline-user.svg";
-import userIconSVG from "@/../public/images/icons/user-icon.svg";
+import customerSVG from "@/../public/images/icons/user-icon.svg";
 import usersSVG from "@/../public/images/icons/icon-outline-users.svg";
 import homeSVG from "@/../public/images/icons/icon-outline-home.svg";
 import chartSquareBarSVG from "@/../public/images/icons/icon-outline-chart-square-bar.svg";
 import filterSVG from "@/../public/images/icons/filter.svg";
 import crossSVG from "@/../public/images/icons/cross.svg";
+import productSVG from "@/../public/images/icons/product.svg";
+import categorySVG from "@/../public/images/icons/category.svg";
+import plusSVG from "@/../public/images/icons/plus.svg";
 
 import CustomLink from "@/components/CustomLink";
 import Image from "next/future/image";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
+import { Box, Slider } from "@mui/material";
+
 type Props = {};
 
+const marks = [
+  {
+    value: 10000,
+    label: "10.000₽",
+  },
+  {
+    value: 100000,
+    label: "100.000₽",
+  },
+];
 const sidebar = [
   {
     category: "Мой профиль",
@@ -64,48 +79,126 @@ const sidebar = [
 const mock = [
   {
     name: "ИП Иванов Иван Иванович",
-    inn: "ИНН 689473638392",
+    inn: "ИНН 6894736383922",
     role: "Производитель",
-    score: "Надёжный" as const,
+    score: "Надёжный",
+    type: "customer" as const,
   },
   {
     name: "ИП Иванов Иван Иванович",
-    inn: "ИНН 689473638392",
+    inn: "ИНН 6894736383912",
     role: "Поставщик",
-    score: "Хороший" as const,
+    score: "Хороший",
+    type: "customer" as const,
   },
   {
     name: "ИП Иванов Иван Иванович",
-    inn: "ИНН 689473638392",
+    inn: "ИНН 6894736383932",
     role: "Дистрибьютор",
-    score: "Нормальный" as const,
+    score: "Нормальный",
+    type: "customer" as const,
+  },
+  {
+    name: "Ноутбук Huawei MateBook D 151 BOD-WDI9",
+    role: "Товар",
+    score: "Хороший",
+    type: "product" as const,
+    price: 47_990,
   },
   {
     name: "ИП Иванов Иван Иванович",
-    inn: "ИНН 689473638392",
+    inn: "ИНН 6894736384392",
     role: "Производитель",
-    score: "Сомнительный" as const,
+    score: "Сомнительный",
+    type: "customer" as const,
+  },
+  {
+    name: "Ноутбук Huawei MateBook D 15 BOD-WDI9",
+    role: "Товар",
+    score: "Хороший",
+    type: "product" as const,
+    price: 47_990,
+  },
+  {
+    name: "Компьютеры, их части и принадлежности",
+    role: "Категория",
+    type: "category" as const,
   },
 ];
-
-const scores: Record<(typeof mock)[number]["score"], string> = {
+const scores: { [key: string]: string } = {
   Надёжный: "bg-green-200",
   Хороший: "bg-emerald-100",
   Нормальный: "bg-emerald-50",
   Сомнительный: "bg-yellow-100",
 };
 
+const images: Record<(typeof mock)[number]["type"], string> = {
+  category: categorySVG,
+  customer: customerSVG,
+  product: productSVG,
+};
+const minDistance = 10;
+const defaultTags = ["Производитель", "Поставщик", "Дистрибьютор", "Товар"];
 function Search({}: Props) {
   const router = useRouter();
   const [search, setSearch] = useState("");
+  const [currentTags, setCurrentTags] = useState<string[]>([]);
+  const [price, setPrice] = useState<[number, number]>([0, 100000]);
+  const [tags, setTags] = useState(defaultTags);
+  const [items, setItem] = useState(mock);
+  const [filteredItems, setFilteredItems] = useState<typeof items>([]);
+  const [isFiltersOpen, setFiltersOpen] = useState(false);
+
+  const handleChange = (
+    event: Event,
+    newValue: number | number[],
+    activeThumb: number
+  ) => {
+    if (!Array.isArray(newValue)) {
+      return;
+    }
+
+    if (activeThumb === 0) {
+      setPrice([Math.min(newValue[0], price[1] - minDistance), price[1]]);
+    } else {
+      setPrice([price[0], Math.max(newValue[1], price[0] + minDistance)]);
+    }
+  };
   useEffect(() => {
     if (typeof router.query.q === "string") {
       setSearch(router.query.q);
     }
   }, [router]);
+  useEffect(() => {
+    const newFilteredItems = items.filter((item) => {
+      if (currentTags.length > 0 && !currentTags.includes(item.role)) {
+        return false;
+      }
+      if (item.price && (item.price < price[0] || item.price > price[1])) {
+        return false;
+      }
+      return true;
+    });
+    setFilteredItems(newFilteredItems);
+  }, [price, currentTags]);
+
+  function addTag(tag: string) {
+    setCurrentTags([...currentTags, tag]);
+    setTags(tags.filter((t) => t !== tag));
+  }
+
+  function removeTag(tag: string) {
+    setCurrentTags(currentTags.filter((t) => t !== tag));
+    setTags([...tags, tag]);
+  }
+
+  function resetTags() {
+    setCurrentTags([]);
+    setTags(defaultTags);
+  }
 
   const tdClassName =
-    "border-b-[12px] py-2 border-transparent  bg-white bg-clip-padding first-of-type:rounded-l-[16px] last-of-type:rounded-r-[16px]";
+    "border-b-[12px] py-2 border-transparent  bg-white bg-clip-padding first-of-type:rounded-l-[16px] last-of-type:rounded-r-[16px] min-w-[190px]";
 
   console.log(search);
   console.log(router.query);
@@ -145,41 +238,83 @@ function Search({}: Props) {
             className="py-2 rounded-tl-lg"
             onChange={(e) => setSearch(e.target.value)}
           />
-          <button>
-            <Image src={filterSVG} alt="" />
-          </button>
+          <Button
+            theme="secondary"
+            onClick={() => setFiltersOpen(!isFiltersOpen)}
+            className="py-1 px-6"
+          >
+            Фильтры
+          </Button>
           <Button theme="secondary" className="py-1 px-6">
             Найти
           </Button>
         </div>
         <div className="border-b  bg-white flex items-center gap-2 border-zinc-200 py-3 px-4">
           <button className="bg-white shadow-blue mr-2 p-0.5 border">
-            <Image src={crossSVG} alt="" />
+            <Image src={crossSVG} alt="" onClick={resetTags} />
           </button>
-          <button className="bg-white text-sm flex items-center gap-2 shadow-blue p-1 border rounded-lg px-3">
-            Поставщик <Image src={crossSVG} alt="" />
-          </button>
-          <button className="bg-white text-sm flex items-center gap-2 shadow-blue p-1 border rounded-lg px-3">
-            Производитель <Image src={crossSVG} alt="" />
-          </button>
-          <button className="bg-white text-sm flex items-center gap-2 shadow-blue p-1 border rounded-lg px-3">
-            Дистрибьютор <Image src={crossSVG} alt="" />
-          </button>
-          <button className="bg-white text-sm flex items-center gap-2 shadow-blue p-1 border rounded-lg px-3">
-            Заказчик <Image src={crossSVG} alt="" />
-          </button>
+
+          {currentTags.map((tag) => (
+            <button
+              key={tag}
+              className="bg-white text-sm flex items-center gap-2 shadow-blue p-1 border rounded-lg px-3"
+              onClick={() => removeTag(tag)}
+            >
+              {tag} <Image src={crossSVG} alt="" />
+            </button>
+          ))}
+        </div>
+        <div
+          className={`bg-white  transition-all overflow-hidden duration-500 ${
+            isFiltersOpen ? "max-h-screen mb-4 px-4 pt-2 pb-8" : "max-h-0"
+          } rounded-b-lg`}
+        >
+          <p className="my-2">Фильтры</p>
+          <div className="w-1/3 pl-4">
+            <Slider
+              getAriaLabel={() => "Минимальная и максимальная цена"}
+              defaultValue={0}
+              max={100000}
+              min={10000}
+              value={price}
+              step={1000}
+              onChange={handleChange}
+              valueLabelDisplay="auto"
+              marks={marks}
+              valueLabelFormat={(e) => e + "₽"}
+            />
+          </div>
+          <div className="flex gap-4">
+            {tags.map((tag) => (
+              <button
+                key={tag}
+                className="bg-white text-sm flex items-center gap-2 shadow-blue p-1 border rounded-lg px-3"
+                onClick={() => addTag(tag)}
+              >
+                {tag} <Image src={plusSVG} alt="" />
+              </button>
+            ))}
+          </div>
         </div>
         <table className="w-full">
           <thead>
             <tr>
               <td
-                className="border-b-[30px] py-2 border-transparent bg-white bg-clip-padding rounded-bl-[24px]"
+                className={`border-b-[30px] transition-all duration-500 py-2 border-transparent bg-white bg-clip-padding ${
+                  isFiltersOpen ? "rounded-tl-[16px]" : "rounded-tl-none"
+                } rounded-bl-[24px]`}
                 align="center"
               ></td>
               <td
                 className="border-b-[30px] py-2  border-transparent bg-white bg-clip-padding"
                 align="center"
               ></td>
+              <td
+                className="border-b-[30px] py-2  border-transparent bg-white bg-clip-padding"
+                align="center"
+              >
+                <span className="text-sm text-gray-600">Цена (₽)</span>
+              </td>
               <td
                 className="border-b-[30px] py-2  border-transparent bg-white bg-clip-padding"
                 align="center"
@@ -187,7 +322,9 @@ function Search({}: Props) {
                 <span className="text-sm text-gray-600">Роль</span>
               </td>
               <td
-                className="border-b-[30px] py-2  border-transparent bg-white bg-clip-padding rounded-br-[24px]"
+                className={`border-b-[30px] py-2 transition-all duration-500 ${
+                  isFiltersOpen ? "rounded-tr-[16px]" : "rounded-tr-none"
+                }  border-transparent bg-white bg-clip-padding rounded-br-[24px]`}
                 align="center"
               >
                 <span className="text-sm text-gray-600">Оценка</span>
@@ -195,21 +332,34 @@ function Search({}: Props) {
             </tr>
           </thead>
           <tbody>
-            {mock.map(({ inn, name, role, score }, i) => (
-              <tr key={inn}>
+            {filteredItems.map(({ inn, name, role, score, price, type }, i) => (
+              <tr
+                key={inn ? inn : name}
+                className="hover:cursor-pointer"
+                onClick={() => router.push("/")}
+              >
                 <td
                   className={`${
                     i === 0 ? "!rounded-tl-[24px]" : ""
-                  } ${tdClassName}`}
+                  } min-w-[100px] ${tdClassName}`}
                   align="center"
                 >
-                  <Image src={userIconSVG} alt="" />
+                  <Image src={images[type]} width={40} height={40} alt="" />
                 </td>
                 <td className={tdClassName}>
                   <div className="flex flex-col  text-sm">
                     <span>{name}</span>
-                    <span className="text-gray-500">{inn}</span>
+                    {inn && <span className="text-gray-500">{inn}</span>}
                   </div>
+                </td>
+                <td className={tdClassName} align="center">
+                  {price ? (
+                    <span className="text-gray-500 text-sm">
+                      {formatNumber(price)}
+                    </span>
+                  ) : (
+                    <span></span>
+                  )}
                 </td>
                 <td className={tdClassName} align="center">
                   <span className="text-gray-500 text-sm">{role}</span>
@@ -220,11 +370,15 @@ function Search({}: Props) {
                   } ${tdClassName}`}
                   align="center"
                 >
-                  <span
-                    className={`${scores[score]} text-xs px-2 py-1 rounded-2xl`}
-                  >
-                    {score}
-                  </span>
+                  {score ? (
+                    <span
+                      className={`${scores[score]} text-xs px-2 py-1 rounded-2xl`}
+                    >
+                      {score}
+                    </span>
+                  ) : (
+                    <span></span>
+                  )}
                 </td>
               </tr>
             ))}
@@ -233,6 +387,13 @@ function Search({}: Props) {
       </div>
     </main>
   );
+}
+
+function formatNumber(value: string | number) {
+  if (typeof value === "string") {
+    value = value.includes(".") ? parseFloat(value) : parseInt(value);
+  }
+  return value.toLocaleString("en-US");
 }
 
 export default Search;
