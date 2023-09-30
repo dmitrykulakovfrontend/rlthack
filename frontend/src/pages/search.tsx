@@ -197,8 +197,7 @@ function Search({}: Props) {
     setTags(defaultTags);
   }
 
-  const tdClassName =
-    "border-b-[12px] py-2 border-transparent  bg-white bg-clip-padding first-of-type:rounded-l-[16px] last-of-type:rounded-r-[16px] min-w-[190px]";
+  const tdClassName = "py-2 border-transparent  bg-white  min-w-[190px]";
 
   console.log(search);
   console.log(router.query);
@@ -266,8 +265,8 @@ function Search({}: Props) {
         </div>
         <div
           className={`bg-white  transition-all overflow-hidden duration-500 ${
-            isFiltersOpen ? "max-h-screen mb-4 px-4 pt-2 pb-8" : "max-h-0"
-          } rounded-b-lg`}
+            isFiltersOpen ? "max-h-screen  px-4 pt-2 pb-8" : "max-h-0"
+          }`}
         >
           <p className="my-2">Фильтры</p>
           <div className="w-1/3 pl-4">
@@ -300,31 +299,25 @@ function Search({}: Props) {
           <thead>
             <tr>
               <td
-                className={`border-b-[30px] transition-all duration-500 py-2 border-transparent bg-white bg-clip-padding ${
-                  isFiltersOpen ? "rounded-tl-[16px]" : "rounded-tl-none"
-                } rounded-bl-[24px]`}
+                className={`py-2 border-transparent bg-white rounded-l-lg`}
                 align="center"
               ></td>
               <td
-                className="border-b-[30px] py-2  border-transparent bg-white bg-clip-padding"
+                className={`py-2 border-transparent bg-white`}
                 align="center"
               ></td>
               <td
-                className="border-b-[30px] py-2  border-transparent bg-white bg-clip-padding"
+                className="py-2 border-transparent bg-white"
                 align="center"
-              >
+              ></td>
+              <td className="py-2 border-transparent bg-white" align="center">
                 <span className="text-sm text-gray-600">Цена (₽)</span>
               </td>
-              <td
-                className="border-b-[30px] py-2  border-transparent bg-white bg-clip-padding"
-                align="center"
-              >
+              <td className="py-2 border-transparent bg-white" align="center">
                 <span className="text-sm text-gray-600">Роль</span>
               </td>
               <td
-                className={`border-b-[30px] py-2 transition-all duration-500 ${
-                  isFiltersOpen ? "rounded-tr-[16px]" : "rounded-tr-none"
-                }  border-transparent bg-white bg-clip-padding rounded-br-[24px]`}
+                className={`py-2 border-transparent bg-white  `}
                 align="center"
               >
                 <span className="text-sm text-gray-600">Оценка</span>
@@ -333,54 +326,48 @@ function Search({}: Props) {
           </thead>
           <tbody>
             {filteredItems.map(({ inn, name, role, score, price, type }, i) => (
-              <tr
-                key={inn ? inn : name}
-                className="hover:cursor-pointer"
-                onClick={() => router.push("/")}
-              >
-                <td
-                  className={`${
-                    i === 0 ? "!rounded-tl-[24px]" : ""
-                  } min-w-[100px] ${tdClassName}`}
-                  align="center"
+              <>
+                <div className="block h-4"></div>
+                <tr
+                  key={inn ? inn : name}
+                  className="hover:cursor-pointer"
+                  onClick={() => router.push("/")}
                 >
-                  <Image src={images[type]} width={40} height={40} alt="" />
-                </td>
-                <td className={tdClassName}>
-                  <div className="flex flex-col  text-sm">
-                    <span>{name}</span>
-                    {inn && <span className="text-gray-500">{inn}</span>}
-                  </div>
-                </td>
-                <td className={tdClassName} align="center">
-                  {price ? (
-                    <span className="text-gray-500 text-sm">
-                      {formatNumber(price)}
-                    </span>
-                  ) : (
-                    <span></span>
-                  )}
-                </td>
-                <td className={tdClassName} align="center">
-                  <span className="text-gray-500 text-sm">{role}</span>
-                </td>
-                <td
-                  className={`${
-                    i === 0 ? "!rounded-tr-[24px]" : ""
-                  } ${tdClassName}`}
-                  align="center"
-                >
-                  {score ? (
-                    <span
-                      className={`${scores[score]} text-xs px-2 py-1 rounded-2xl`}
-                    >
-                      {score}
-                    </span>
-                  ) : (
-                    <span></span>
-                  )}
-                </td>
-              </tr>
+                  <div className="block h-4"></div>
+                  <td className={`${tdClassName} rounded-l-lg`} align="center">
+                    <Image src={images[type]} width={40} height={40} alt="" />
+                  </td>
+                  <td className={tdClassName}>
+                    <div className="flex flex-col  text-sm">
+                      <span>{name}</span>
+                      {inn && <span className="text-gray-500">{inn}</span>}
+                    </div>
+                  </td>
+                  <td className={tdClassName} align="center">
+                    {price ? (
+                      <span className="text-gray-500 text-sm">
+                        {formatNumber(price)}
+                      </span>
+                    ) : (
+                      <span></span>
+                    )}
+                  </td>
+                  <td className={tdClassName} align="center">
+                    <span className="text-gray-500 text-sm">{role}</span>
+                  </td>
+                  <td className={`${tdClassName} rounded-r-lg`} align="center">
+                    {score ? (
+                      <span
+                        className={`${scores[score]} text-xs px-2 py-1 rounded-2xl`}
+                      >
+                        {score}
+                      </span>
+                    ) : (
+                      <span></span>
+                    )}
+                  </td>
+                </tr>
+              </>
             ))}
           </tbody>
         </table>
