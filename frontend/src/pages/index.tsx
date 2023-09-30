@@ -1,6 +1,13 @@
 "use client";
 import Image from "next/future/image";
-import { useState, useEffect } from "react";
+import {
+  useState,
+  useEffect,
+  EventHandler,
+  FormEventHandler,
+  ReactEventHandler,
+  FormEvent,
+} from "react";
 import { BACKEND_URL } from "../../constants";
 
 import dotsSVG from "@/../public/images/background-dots-1.svg";
@@ -17,6 +24,7 @@ import phoneSVG from "@/../public/images/icons/phone.svg";
 
 import Input from "@/components/Input";
 import CustomLink from "@/components/CustomLink";
+import { useRouter } from "next/router";
 
 const advantages = [
   {
@@ -44,15 +52,27 @@ const advantages = [
 ];
 
 export default function Home() {
+  const [search, setSearch] = useState("");
+  const router = useRouter();
+
+  function performSearch() {
+    router.push({
+      pathname: "/search",
+      query: {
+        q: search,
+      },
+    });
+  }
+  console.log(search);
   return (
-    <main className=" text-white px-16 py-32 flex flex-col gap-48">
+    <main id="main" className=" text-white px-16 py-32 flex flex-col gap-48">
       <Image
         alt=""
         src={dotsSVG}
         className="-z-10 absolute top-0 left-0 w-full h-full"
       />
       <section className="flex flex-col relative gap-12">
-        <h1 className="text-6xl font-bold leading-normal">
+        <h1 id="search" className="text-6xl font-bold leading-normal">
           Платформа для заказчиков и поставщиков
           <br />с интеллектуальным поиском
         </h1>
@@ -60,9 +80,14 @@ export default function Home() {
           Тысячи товаров и участников закупок в одном месте
         </span>
         <Input
-          wrapperClassName="max-w-4xl"
+          wrapperClassName="max-w-4xl rounded-3xl"
           placeholder="Поиск по ИНН, ОГРН, категории или товару"
+          className="py-4 px-8 rounded-3xl"
           search
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          onIconClick={performSearch}
+          onKeyUp={(e) => e.key === "Enter" && performSearch()}
         />
         <Image
           alt=""
@@ -112,7 +137,10 @@ export default function Home() {
             О площадке
           </h2>
         </div>
-        <div className="bg-indigo-700 rounded-[40px] border-4 absolute left-12 -top-8  border-white border-opacity-30 backdrop-blur-2xl w-fit py-3 text-2xl px-12">
+        <div
+          id="about"
+          className="bg-indigo-700 rounded-[40px] border-4 absolute left-12 -top-8  border-white border-opacity-30 backdrop-blur-2xl w-fit py-3 text-2xl px-12"
+        >
           Прокачиваем развивающийся сегмент рынка
         </div>
         <div className="bg-slate-500 rounded-[40px] border-4 absolute right-28 top-12   border-white border-opacity-30 backdrop-blur-2xl w-fit py-3 text-2xl px-12">
@@ -138,7 +166,7 @@ export default function Home() {
           className="-z-10 absolute top-0 left-0 w-full"
         />
         <h2 className="text-4xl font-bold">Центр поддержки</h2>
-        <div className="flex text-2xl justify-between">
+        <div id="help" className="flex text-2xl justify-between">
           <CustomLink
             href=""
             className="bg-black flex gap-8 bg-opacity-20 py-4 px-8 items-center rounded-3xl border-4 border-blue-700"

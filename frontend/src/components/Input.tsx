@@ -1,23 +1,47 @@
 import React from "react";
-import searchSVG from "@/../public/images/icons/search.svg";
 import Image from "next/future/image";
+
+import crossSVG from "@/../public/images/icons/cross.svg";
+import searchSVG from "@/../public/images/icons/search.svg";
 
 type Props = {
   search?: boolean;
   wrapperClassName?: string;
+  onIconClick?: () => void;
+  onClearClick?: () => void;
+  clearButton?: boolean;
 } & React.ComponentProps<"input">;
 
-function Input({ search, wrapperClassName, ...rest }: Props) {
+function Input({
+  search,
+  wrapperClassName,
+  onIconClick,
+  onClearClick,
+  className,
+  clearButton,
+  ...rest
+}: Props) {
   return (
-    <div className={`rounded-3xl relative bg-white ${wrapperClassName}`}>
+    <div className={`relative w-full bg-white ${wrapperClassName}`}>
       <input
-        className={`h-full text-black w-full py-4 px-8 rounded-3xl ${
-          search ? "pr-20" : ""
-        }`}
+        className={`h-full text-black w-full ${search ? "pr-20" : ""} ${
+          clearButton ? "pl-10" : ""
+        } ${className}`}
         {...rest}
       />
+      {clearButton && (
+        <button
+          onClick={onClearClick}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-10"
+        >
+          <Image src={crossSVG} alt="" />
+        </button>
+      )}
       {search && (
-        <button className="absolute right-0 top-1/2 -translate-y-1/2 mr-8 z-10">
+        <button
+          onClick={onIconClick}
+          className="absolute right-8 top-1/2 -translate-y-1/2 z-10"
+        >
           <Image alt="" src={searchSVG} width={32} />
         </button>
       )}

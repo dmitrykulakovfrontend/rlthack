@@ -13,7 +13,17 @@
     --foreground-rgb: 255, 255, 255;
   }
 }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   background: linear-gradient(92deg, #012469 -10.76%, #034be2 121.45%);
 }
+
+/* td {
+  padding: 10px;
+  border-bottom: 15px solid transparent;
+  background-color: white;
+  background-clip: padding-box;
+} */
