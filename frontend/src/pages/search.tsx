@@ -235,17 +235,17 @@ function Search({}: Props) {
             clearButton
             value={search}
             wrapperClassName="rounded-tl-lg"
-            className="py-2 rounded-tl-lg"
+            className="py-4 rounded-tl-lg"
             onChange={(e) => setSearch(e.target.value)}
           />
           <Button
-            theme="secondary"
+            theme="main"
             onClick={() => setFiltersOpen(!isFiltersOpen)}
-            className="py-1 px-6"
+            className="py-2 px-8"
           >
             Фильтры
           </Button>
-          <Button theme="secondary" className="py-1 px-6">
+          <Button theme="secondary" className="py-2 px-8">
             Найти
           </Button>
         </div>
