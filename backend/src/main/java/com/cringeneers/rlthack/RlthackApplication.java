@@ -26,8 +26,8 @@ public class RlthackApplication {
 	public String home() {
 		return "Dockerizing Spring Boot Application";
 	}
-	@GetMapping("/api/test")
-    public ResponseEntity<ApiResponse<Customer>> test() {
+	@GetMapping("/api/customers")
+    public ResponseEntity<ApiResponse<Customer>> customers() {
         List<Customer> allCustomers = this.repository.findAll();
         ApiResponse<Customer> response = new ApiResponse<>(allCustomers);
         return ResponseEntity.ok(response);
