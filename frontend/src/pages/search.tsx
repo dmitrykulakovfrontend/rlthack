@@ -1,25 +1,17 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
-import bellSVG from "@/../public/images/icons/icon-outline-bell.svg";
-import folderSVG from "@/../public/images/icons/icon-outline-folder.svg";
-import chartSVG from "@/../public/images/icons/icon-outline-chart-bar.svg";
-import userSVG from "@/../public/images/icons/icon-outline-user.svg";
-import customerSVG from "@/../public/images/icons/user-icon.svg";
-import usersSVG from "@/../public/images/icons/icon-outline-users.svg";
-import homeSVG from "@/../public/images/icons/icon-outline-home.svg";
-import chartSquareBarSVG from "@/../public/images/icons/icon-outline-chart-square-bar.svg";
-import filterSVG from "@/../public/images/icons/filter.svg";
 import crossSVG from "@/../public/images/icons/cross.svg";
+import supplierSVG from "@/../public/images/icons/user-icon.svg";
 import productSVG from "@/../public/images/icons/product.svg";
 import categorySVG from "@/../public/images/icons/category.svg";
 import plusSVG from "@/../public/images/icons/plus.svg";
 
-import CustomLink from "@/components/CustomLink";
 import Image from "next/future/image";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
-import { Box, Slider } from "@mui/material";
+import { Slider } from "@mui/material";
+import Sidebar from "@/components/Sidebar";
 
 type Props = {};
 
@@ -33,48 +25,6 @@ const marks = [
     label: "100.000₽",
   },
 ];
-const sidebar = [
-  {
-    category: "Мой профиль",
-    children: [
-      {
-        title: "Заявки",
-        icon: bellSVG,
-        href: "",
-      },
-      {
-        title: "Сохраненное",
-        icon: folderSVG,
-        href: "",
-      },
-    ],
-  },
-  {
-    category: "Аналитика",
-    children: [
-      {
-        title: "Общий рейтинг",
-        icon: chartSVG,
-        href: "",
-      },
-      {
-        title: "Заказчики",
-        icon: userSVG,
-        href: "",
-      },
-      {
-        title: "Поставщики",
-        icon: usersSVG,
-        href: "",
-      },
-      {
-        title: "Уровень цен",
-        icon: chartSquareBarSVG,
-        href: "",
-      },
-    ],
-  },
-];
 
 const mock = [
   {
@@ -82,21 +32,21 @@ const mock = [
     inn: "ИНН 6894736383922",
     role: "Производитель",
     score: "Надёжный",
-    type: "customer" as const,
+    type: "supplier" as const,
   },
   {
     name: "ИП Иванов Иван Иванович",
     inn: "ИНН 6894736383912",
     role: "Поставщик",
     score: "Хороший",
-    type: "customer" as const,
+    type: "supplier" as const,
   },
   {
     name: "ИП Иванов Иван Иванович",
     inn: "ИНН 6894736383932",
     role: "Дистрибьютор",
     score: "Нормальный",
-    type: "customer" as const,
+    type: "supplier" as const,
   },
   {
     name: "Ноутбук Huawei MateBook D 151 BOD-WDI9",
@@ -110,7 +60,7 @@ const mock = [
     inn: "ИНН 6894736384392",
     role: "Производитель",
     score: "Сомнительный",
-    type: "customer" as const,
+    type: "supplier" as const,
   },
   {
     name: "Ноутбук Huawei MateBook D 15 BOD-WDI9",
@@ -125,7 +75,7 @@ const mock = [
     type: "category" as const,
   },
 ];
-const scores: { [key: string]: string } = {
+export const scores: { [key: string]: string } = {
   Надёжный: "bg-green-200",
   Хороший: "bg-emerald-100",
   Нормальный: "bg-emerald-50",
@@ -134,7 +84,7 @@ const scores: { [key: string]: string } = {
 
 const images: Record<(typeof mock)[number]["type"], string> = {
   category: categorySVG,
-  customer: customerSVG,
+  supplier: supplierSVG,
   product: productSVG,
 };
 const minDistance = 10;
@@ -203,31 +153,7 @@ function Search({}: Props) {
   console.log(router.query);
   return (
     <main className="flex font-exo2 py-16 min-h-screen gap-8 px-24">
-      <nav className="p-8 font-medium h-fit bg-white rounded-lg w-full max-w-xs flex flex-col gap-6">
-        <CustomLink className="flex gap-2" href="">
-          <Image src={homeSVG} alt="" />
-          Главная страница
-        </CustomLink>
-        {sidebar.map(({ category, children }) => (
-          <div key={category} className="flex flex-col gap-4">
-            <span className="text-gray-400 uppercase tracking-wide text-xs">
-              {category}
-            </span>
-            <ul className="flex flex-col gap-4">
-              {children.map((link) => (
-                <CustomLink
-                  href={link.href}
-                  className="flex gap-2"
-                  key={link.title}
-                >
-                  <Image src={link.icon} alt="" />
-                  <span className="text-sm">{link.title}</span>
-                </CustomLink>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </nav>
+      <Sidebar />
       <div className="bg-transparent h-fit w-full rounded-lg">
         <div className="border-b bg-white flex items-center gap-4 border-zinc-200 rounded-t-lg pr-2">
           <Input
@@ -299,15 +225,11 @@ function Search({}: Props) {
           <thead>
             <tr>
               <td
-                className={`py-2 border-transparent bg-white rounded-l-lg`}
+                className={`py-2 border-transparent bg-white rounded-bl-lg`}
                 align="center"
               ></td>
               <td
                 className={`py-2 border-transparent bg-white`}
-                align="center"
-              ></td>
-              <td
-                className="py-2 border-transparent bg-white"
                 align="center"
               ></td>
               <td className="py-2 border-transparent bg-white" align="center">
@@ -317,7 +239,7 @@ function Search({}: Props) {
                 <span className="text-sm text-gray-600">Роль</span>
               </td>
               <td
-                className={`py-2 border-transparent bg-white  `}
+                className={`py-2 border-transparent bg-white   rounded-br-lg`}
                 align="center"
               >
                 <span className="text-sm text-gray-600">Оценка</span>
@@ -325,42 +247,65 @@ function Search({}: Props) {
             </tr>
           </thead>
           <tbody>
-            {filteredItems.map(({ inn, name, role, score, price, type }, i) => (
+            {filteredItems.map((item, i) => (
               <>
-                <div className="block h-4"></div>
+                <div key={item.inn + item.name} className="block h-4"></div>
+
                 <tr
-                  key={inn ? inn : name}
+                  key={item.inn ? item.inn : item.name}
                   className="hover:cursor-pointer"
-                  onClick={() => router.push("/")}
+                  onClick={() => {
+                    const id = item.inn
+                      ? item.inn.replace(/\s/g, "-")
+                      : item.name.replace(/\s/g, "-");
+
+                    item.type === "category"
+                      ? setCurrentTags([...currentTags, item.name])
+                      : router.push(
+                          {
+                            pathname: `/${item.type}/${id}`,
+                            query: item,
+                          },
+                          `/${item.type}/${id}`
+                        );
+                  }}
                 >
-                  <div className="block h-4"></div>
                   <td className={`${tdClassName} rounded-l-lg`} align="center">
-                    <Image src={images[type]} width={40} height={40} alt="" />
+                    <Image
+                      src={images[item.type]}
+                      width={40}
+                      height={40}
+                      alt=""
+                    />
                   </td>
                   <td className={tdClassName}>
                     <div className="flex flex-col  text-sm">
-                      <span>{name}</span>
-                      {inn && <span className="text-gray-500">{inn}</span>}
+                      <span>{item.name}</span>
+                      {item.inn && (
+                        <span className="text-gray-500">{item.inn}</span>
+                      )}
                     </div>
                   </td>
                   <td className={tdClassName} align="center">
-                    {price ? (
+                    {item.price ? (
                       <span className="text-gray-500 text-sm">
-                        {formatNumber(price)}
+                        {formatNumber(item.price)}
                       </span>
                     ) : (
                       <span></span>
                     )}
                   </td>
                   <td className={tdClassName} align="center">
-                    <span className="text-gray-500 text-sm">{role}</span>
+                    <span className="text-gray-500 text-sm">{item.role}</span>
                   </td>
                   <td className={`${tdClassName} rounded-r-lg`} align="center">
-                    {score ? (
+                    {item.score ? (
                       <span
-                        className={`${scores[score]} text-xs px-2 py-1 rounded-2xl`}
+                        className={`${
+                          scores[item.score]
+                        } text-xs px-2 py-1 rounded-2xl`}
                       >
-                        {score}
+                        {item.score}
                       </span>
                     ) : (
                       <span></span>
