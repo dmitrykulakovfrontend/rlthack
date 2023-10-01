@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Название проекта
 
-## Getting Started
+Это подробное описание README для проекта **[Название вашего проекта]**.
 
-First, run the development server:
+## Содержание
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- [Введение](#введение)
+- [Предварительные требования](#предварительные-требования)
+- [Начало работы](#начало-работы)
+- [Структура проекта](#структура-проекта)
+- [Использование](#использование)
+- [Docker Compose](#docker-compose)
+- [Развертывание](#развертывание)
+- [Участие](#участие)
+- [Лицензия](#лицензия)
+
+## Введение
+
+Добро пожаловать в проект **[Название вашего проекта]**! Этот проект направлен на [краткое описание целей и назначения вашего проекта].
+
+## Предварительные требования
+
+Перед началом работы убедитесь, что выполнены следующие требования:
+
+- [Docker](https://www.docker.com/)
+- [Node.js](https://nodejs.org/)
+- [Java](https://www.oracle.com/java/)
+- [Python](https://www.python.org/)
+
+## Начало работы
+
+**Если вы хотите запустить сразу все готовым то переходите к Docker Compose**
+
+Для запуска проекта выполните следующие шаги:
+
+1. Клонируйте репозиторий:
+
+   ```bash
+   git clone https://github.com/dmitrykulakovfrontend/rlthack.git
+   cd rlthack
+   ```
+
+1. Установите зависимости для фронтенда и запустите сервер, он будет доступен на http://localhost:3000/ (Сделано при помощи Next.js)
+
+   ```bash
+     cd frontend
+     npm install
+     npm run dev
+   ```
+
+1. Запустите сервер бэкенда, он будет доступен на http://localhost:8080/ (Сделано при помощи Java и Springboot)
+   **Если вы хотите просто проверить работоспособность то советую перейти к Docker Compose ниже.**
+
+   для работы это метода вам нужно будет создать файл в backend\src\main\resources\application.properties
+   и вставить туда:
+   `     spring.datasource.url=${DB_URL}
+     spring.datasource.username=${DB_USERNAME}
+     spring.datasource.password=${DB_PASSWORD}
+    `
+   Затем вы можете запустить сервер:
+
+   ```bash
+     cd backend
+     ./mvnw spring-boot:run
+   ```
+
+1. Установите зависимости для сервера с машинным обучением (Python Flask)
+
+   ```bash
+     cd ML
+
+   ```
+
+# Структура проекта
+
+Вот обзор структуры директории проекта:
+
+```scss
+/
+├── docker-compose.yaml
+├── frontend/
+│   ├── (Файлы фронтенда Next.js)
+│   └── ...
+├── backend/
+│   ├── (Файлы бэкенда Spring Boot)
+│   └── ...
+├── ML/
+│   ├── (Файлы сервера машинного обучения Python)
+│   └── ...
+└── ...
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# Docker Compose
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Вы можете использовать Docker Compose для запуска всего стека проекта. Убедитесь, что у вас установлен **Docker Compose** И/Или **Docker**.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```shell
+# Из корневой директории проекта
+docker-compose up --build
 
-## Learn More
+```
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Это запустит контейнеры для фронтенда, бэкенда и будет использовать наше машинное обучение из облака, база данных также в таком случае будет браться из облака
