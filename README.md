@@ -42,10 +42,11 @@
 
    для работы это метода вам нужно будет создать файл в backend\src\main\resources\application.properties
    и вставить туда:
-   `     spring.datasource.url=${DB_URL}
+   ```
+     spring.datasource.url=${DB_URL}
      spring.datasource.username=${DB_USERNAME}
      spring.datasource.password=${DB_PASSWORD}
-    `
+    ```
    Затем вы можете запустить сервер:
 
    ```bash
