@@ -6,16 +6,12 @@ services:
     build:
       context: ./backend
     container_name: backend
+    environment:
+      - DB_URL=jdbc:postgresql://91.185.85.237:5432/rlthackdb
+      - DB_USERNAME=cringe
+      - DB_PASSWORD=supercringe
     ports:
       - 8080:8080
-    depends_on:
-      - database
-
-  database:
-    image: "postgres:13.1-alpine"
-    container_name: database
-    env_file:
-      - .env
 
   frontend:
     image: "dmitrykulakovfrontend/cringeneers-frontend:latest"

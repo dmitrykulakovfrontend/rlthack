@@ -88,15 +88,34 @@ const images: Record<(typeof mock)[number]["type"], string> = {
   product: productSVG,
 };
 const minDistance = 10;
-const defaultTags = ["Производитель", "Поставщик", "Дистрибьютор", "Товар"];
+export type Product = {
+  ID: number;
+  INN: number;
+  Name: string;
+  Price: number;
+  Category: Category;
+  NReviews: number;
+  Rating: number;
+  Country: Country;
+  Volume: number;
+  lemm_name: string;
+  KNN: number;
+};
+export enum Category {
+  Laptop = "laptop",
+}
+
+export enum Country {
+  Россия = "Россия",
+}
 function Search({}: Props) {
   const router = useRouter();
   const [search, setSearch] = useState("");
   const [currentTags, setCurrentTags] = useState<string[]>([]);
   const [price, setPrice] = useState<[number, number]>([0, 100000]);
-  const [tags, setTags] = useState(defaultTags);
-  const [items, setItem] = useState(mock);
-  const [filteredItems, setFilteredItems] = useState<typeof items>([]);
+  const [tags, setTags] = useState<string[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [isFiltersOpen, setFiltersOpen] = useState(false);
 
   const handleChange = (
@@ -117,20 +136,21 @@ function Search({}: Props) {
   useEffect(() => {
     if (typeof router.query.q === "string") {
       setSearch(router.query.q);
+      executeSearch(router.query.q);
     }
   }, [router]);
   useEffect(() => {
-    const newFilteredItems = items.filter((item) => {
-      if (currentTags.length > 0 && !currentTags.includes(item.role)) {
-        return false;
-      }
-      if (item.price && (item.price < price[0] || item.price > price[1])) {
+    const newFilteredProducts = products.filter((product) => {
+      if (
+        product.Price &&
+        (product.Price < price[0] || product.Price > price[1])
+      ) {
         return false;
       }
       return true;
     });
-    setFilteredItems(newFilteredItems);
-  }, [price, currentTags]);
+    setFilteredProducts(newFilteredProducts);
+  }, [price, currentTags, products]);
 
   function addTag(tag: string) {
     setCurrentTags([...currentTags, tag]);
@@ -142,20 +162,43 @@ function Search({}: Props) {
     setTags([...tags, tag]);
   }
 
+  async function executeSearch(query: string) {
+    // 91.185.84.154
+    const response = await fetch(
+      "http://91.185.84.154:5000/intellect_search/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          query: query,
+        }),
+      }
+    );
+    console.log("response: ", response);
+    const data = (await response.json()) as Product[];
+    console.log("data: ", data);
+    setProducts(data);
+    const uniqueTags = Array.from(
+      new Set(data.map((product) => product.Category))
+    );
+    setTags(uniqueTags);
+  }
+
   function resetTags() {
     setCurrentTags([]);
-    setTags(defaultTags);
+    setTags([...currentTags]);
   }
 
   const tdClassName = "py-2 border-transparent  bg-white  min-w-[190px]";
 
-  console.log(search);
-  console.log(router.query);
   return (
     <main className="flex font-exo2 py-16 min-h-screen gap-8 px-24">
       <Sidebar />
       <div className="bg-transparent h-fit w-full rounded-lg">
-        <div className="border-b bg-white flex items-center gap-4 border-zinc-200 rounded-t-lg pr-2">
+        <div className="border-b bg-white flex products-center gap-4 border-zinc-200 rounded-t-lg pr-2">
           <Input
             clearButton
             value={search}
@@ -170,11 +213,15 @@ function Search({}: Props) {
           >
             Фильтры
           </Button>
-          <Button theme="secondary" className="py-2 px-8">
+          <Button
+            onClick={() => executeSearch(search)}
+            theme="secondary"
+            className="py-2 px-8"
+          >
             Найти
           </Button>
         </div>
-        <div className="border-b  bg-white flex items-center gap-2 border-zinc-200 py-3 px-4">
+        <div className="border-b  bg-white flex products-center gap-2 border-zinc-200 py-3 px-4">
           <button className="bg-white shadow-blue mr-2 p-0.5 border">
             <Image src={crossSVG} alt="" onClick={resetTags} />
           </button>
@@ -182,7 +229,7 @@ function Search({}: Props) {
           {currentTags.map((tag) => (
             <button
               key={tag}
-              className="bg-white text-sm flex items-center gap-2 shadow-blue p-1 border rounded-lg px-3"
+              className="bg-white text-sm flex products-center gap-2 shadow-blue p-1 border rounded-lg px-3"
               onClick={() => removeTag(tag)}
             >
               {tag} <Image src={crossSVG} alt="" />
@@ -213,7 +260,7 @@ function Search({}: Props) {
             {tags.map((tag) => (
               <button
                 key={tag}
-                className="bg-white text-sm flex items-center gap-2 shadow-blue p-1 border rounded-lg px-3"
+                className="bg-white text-sm flex products-center gap-2 shadow-blue p-1 border rounded-lg px-3"
                 onClick={() => addTag(tag)}
               >
                 {tag} <Image src={plusSVG} alt="" />
@@ -247,69 +294,48 @@ function Search({}: Props) {
             </tr>
           </thead>
           <tbody>
-            {filteredItems.map((item, i) => (
+            {filteredProducts.map((product, i) => (
               <>
-                <div key={item.inn + item.name} className="block h-4"></div>
+                <div key={product.ID} className="block h-4"></div>
 
                 <tr
-                  key={item.inn ? item.inn : item.name}
+                  key={product.INN}
                   className="hover:cursor-pointer"
                   onClick={() => {
-                    const id = item.inn
-                      ? item.inn.replace(/\s/g, "-")
-                      : item.name.replace(/\s/g, "-");
-
-                    item.type === "category"
-                      ? setCurrentTags([...currentTags, item.name])
-                      : router.push(
-                          {
-                            pathname: `/${item.type}/${id}`,
-                            query: item,
-                          },
-                          `/${item.type}/${id}`
-                        );
+                    router.push(
+                      {
+                        pathname: `/product/${product.ID}`,
+                        query: product,
+                      },
+                      `/product/${product.ID}`
+                    );
                   }}
                 >
                   <td className={`${tdClassName} rounded-l-lg`} align="center">
-                    <Image
-                      src={images[item.type]}
-                      width={40}
-                      height={40}
-                      alt=""
-                    />
+                    <Image src={productSVG} width={40} height={40} alt="" />
                   </td>
                   <td className={tdClassName}>
                     <div className="flex flex-col  text-sm">
-                      <span>{item.name}</span>
-                      {item.inn && (
-                        <span className="text-gray-500">{item.inn}</span>
-                      )}
+                      <span>{product.Name}</span>
+                      <span className="text-gray-500">{product.INN}</span>
                     </div>
                   </td>
                   <td className={tdClassName} align="center">
-                    {item.price ? (
-                      <span className="text-gray-500 text-sm">
-                        {formatNumber(item.price)}
-                      </span>
-                    ) : (
-                      <span></span>
-                    )}
+                    <span className="text-gray-500 text-sm">
+                      {formatNumber(product.Price)}
+                    </span>
                   </td>
                   <td className={tdClassName} align="center">
-                    <span className="text-gray-500 text-sm">{item.role}</span>
+                    <span className="text-gray-500 text-sm">
+                      {product.Category}
+                    </span>
                   </td>
                   <td className={`${tdClassName} rounded-r-lg`} align="center">
-                    {item.score ? (
-                      <span
-                        className={`${
-                          scores[item.score]
-                        } text-xs px-2 py-1 rounded-2xl`}
-                      >
-                        {item.score}
-                      </span>
-                    ) : (
-                      <span></span>
-                    )}
+                    <span
+                      className={`${scores["Нормальный"]} text-xl px-2 py-1 rounded-2xl`}
+                    >
+                      {product.Rating}
+                    </span>
                   </td>
                 </tr>
               </>
@@ -321,7 +347,7 @@ function Search({}: Props) {
   );
 }
 
-function formatNumber(value: string | number) {
+export function formatNumber(value: string | number) {
   if (typeof value === "string") {
     value = value.includes(".") ? parseFloat(value) : parseInt(value);
   }

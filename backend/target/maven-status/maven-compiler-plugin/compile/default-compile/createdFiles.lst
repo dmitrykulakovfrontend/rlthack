@@ -1,0 +1,5 @@
+com\cringeneers\rlthack\ApiResponse.class
+com\cringeneers\rlthack\Customer.class
+com\cringeneers\rlthack\RlthackApplication.class
+com\cringeneers\rlthack\WebConfig.class
+com\cringeneers\rlthack\CustomerRepository.class
